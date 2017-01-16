@@ -40,11 +40,10 @@ if __name__ == '__main__':
         if a!=-1 and b!=-1:
             jpg = ip_camera.bytes[a:b+2]
             ip_camera.bytes= ip_camera.bytes[b+2:]
-            i = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
-            image_message = cv.fromarray(i)
-            ip_camera.image_pub.publish(ip_camera.bridge.cv_to_imgmsg(image_message, "bgr8"))
+            image_message = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8),cv2.CV_LOAD_IMAGE_COLOR)
+            ip_camera.image_pub.publish(ip_camera.bridge.cv2_to_imgmsg(image_message, "bgr8"))
 
             if args.gui:
-                cv2.imshow('IP Camera Publisher Cam',i)
+                cv2.imshow('IP Camera Publisher Cam',image_message)
             if cv2.waitKey(1) ==27: # wait until ESC key is pressed in the GUI window to stop it
                 exit(0) 
